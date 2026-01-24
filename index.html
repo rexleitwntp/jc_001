@@ -4,52 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鉅倡餐飲設備 - 排煙規劃系統</title>
-    <!-- 載入穩定版套件 -->
-    <script src="https://cdn.jsdelivr.net"></script>
+    <!-- 使用最穩定的 CDN 源 -->
+    <script src="https://cdnjs.cloudflare.com"></script>
     <style>
         :root { --primary-color: #0d47a1; --secondary-color: #1b5e20; --bg-color: #f4f7f9; }
         body { font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; background-color: var(--bg-color); margin: 0; padding: 10px; color: #333; }
         .container { max-width: 800px; margin: auto; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); padding: 20px; box-sizing: border-box; }
-        
-        /* 標題與公司資訊 */
         .company-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
         .company-name { font-size: 24px; font-weight: 900; color: var(--primary-color); margin: 0; }
         .company-info { font-size: 13px; color: #666; margin-top: 5px; line-height: 1.4; }
-
-        /* 輸入區自適應排版 */
         .input-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; background: #e3f2fd; padding: 15px; border-radius: 8px; }
         label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
         input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        
-        /* 按鈕優化 */
-        .calc-btn { background: var(--primary-color); color: white; border: none; width: 100%; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
-        .calc-btn:active { transform: scale(0.98); background: #0a3d8a; }
-
-        /* 報告書區塊 */
+        .calc-btn { background: var(--primary-color); color: white; border: none; width: 100%; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; }
         #report-area { display: none; margin-top: 25px; }
         #capture-zone { background: white; padding: 20px; border: 2px solid #ddd; border-radius: 10px; }
         .input-summary { font-size: 13px; background: #f1f1f1; padding: 10px; border-radius: 5px; margin: 15px 0; border-left: 4px solid #999; }
-        
         .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { border: 1px solid #eee; padding: 12px; border-radius: 8px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .card { border: 1px solid #eee; padding: 12px; border-radius: 8px; background: #fff; }
         .card b { font-size: 12px; color: var(--primary-color); display: block; margin-bottom: 4px; }
-        .val { font-size: 18px; font-weight: bold; color: #222; }
-
-        /* 功能按鈕 */
+        .val { font-size: 18px; font-weight: bold; }
         .action-btns { display: flex; gap: 10px; margin-top: 20px; }
-        .action-btns button { flex: 1; padding: 14px; border-radius: 6px; border: none; color: white; font-weight: bold; cursor: pointer; font-size: 15px; }
+        .action-btns button { flex: 1; padding: 14px; border-radius: 6px; border: none; color: white; font-weight: bold; cursor: pointer; }
         .btn-copy { background: #455a64; }
         .btn-img { background: var(--secondary-color); }
-
-        /* 手機版 RWD 調整 */
-        @media screen and (max-width: 600px) {
-            .input-section, .result-grid { grid-template-columns: 1fr; }
-            .container { padding: 15px; }
-            .val { font-size: 17px; }
-            .action-btns { flex-direction: column; }
-        }
-
-        details { margin-top: 25px; font-size: 13px; border-top: 1px solid #eee; padding-top: 10px; color: #666; }
+        @media screen and (max-width: 600px) { .input-section, .result-grid { grid-template-columns: 1fr; } .action-btns { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -57,43 +36,22 @@
 <div class="container">
     <div class="company-header">
         <p class="company-name">鉅倡餐飲設備</p>
-        <p class="company-info">專營：排煙、靜電機、餐飲設備 規劃、設計、買賣<br>電話：(03) 212-9666 | 桃園市蘆竹區八股路279號之5</p>
+        <p class="company-info">(03) 212-9666 | 蘆竹區八股路279號之5</p>
     </div>
     
     <div class="input-section">
-        <div>
-            <label>爐具長度 (公分 CM)</label>
-            <input type="number" id="heatL" value="120">
-        </div>
-        <div>
-            <label>爐具寬度 (公分 CM)</label>
-            <input type="number" id="heatW" value="80">
-        </div>
-        <div>
-            <label>法規區域類別</label>
-            <select id="zone">
-                <option value="25">第一類：住宅區 (強制除味)</option>
-                <option value="0">第二類：商業區</option>
-            </select>
-        </div>
-        <div>
-            <label>管路長度/彎頭 (米/個)</label>
-            <div style="display: flex; gap: 5px;">
-                <input type="number" id="pipeL" value="5">
-                <input type="number" id="ebs" value="2">
-            </div>
-        </div>
+        <div><label>爐具長度 (CM)</label><input type="number" id="heatL" value="120"></div>
+        <div><label>爐具寬度 (CM)</label><input type="number" id="heatW" value="80"></div>
+        <div><label>區域</label><select id="zone"><option value="25">住宅區</option><option value="0">商業區</option></select></div>
+        <div><label>管長/彎頭</label><div style="display: flex; gap: 5px;"><input type="number" id="pipeL" value="5"><input type="number" id="ebs" value="2"></div></div>
     </div>
 
-    <button class="calc-btn" onclick="calculate()">生成 2027 新制建議報告</button>
+    <button class="calc-btn" onclick="calculate()">生成建議報告</button>
 
     <div id="report-area">
         <div id="capture-zone">
-            <h3 style="text-align:center; margin:0; color:var(--primary-color);">餐飲排煙系統規劃建議書</h3>
-            <p style="text-align:center; font-size:12px; margin:5px 0 15px;">執行標準：桃園市餐飲業空污防制條例 (2027全面施行)</p>
-
+            <h3 style="text-align:center; margin:0; color:var(--primary-color);">排煙系統規劃建議書</h3>
             <div class="input-summary" id="sum-in"></div>
-
             <div class="result-grid">
                 <div class="card"><b>1. 建議煙罩尺寸</b><div id="r-hood" class="val"></div></div>
                 <div class="card"><b>2. 風機建議功率</b><div id="r-hp" class="val"></div></div>
@@ -102,29 +60,13 @@
                 <div class="card"><b>5. 補風口尺寸(約)</b><div id="r-air" class="val"></div></div>
                 <div class="card"><b>6. 靜電處理機規格</b><div id="r-esp" class="val"></div></div>
             </div>
-
-            <div style="margin-top:20px; padding:10px; background:#fff9c4; border-radius:5px; font-size:11px;">
-                <b>鉅倡技術叮嚀：</b><br>
-                1. 住宅區必須加裝活性碳，否則異味檢舉風險極高。<br>
-                2. 風機馬力已預留靜電機及過濾箱之阻力補償。<br>
-                3. 補風口若未設置，會導致抽風力大幅下降，請務必配合。
-            </div>
+            <div style="margin-top:15px; text-align:center; font-size:12px; color:#666;">鉅倡餐飲設備 版權所有</div>
         </div>
 
         <div class="action-btns">
-            <button class="btn-copy" onclick="copyText()">複製文字報告</button>
-            <button class="btn-img" onclick="saveImage()">產生報告圖片 (自動下載)</button>
+            <button class="btn-copy" onclick="copyText()">複製文字</button>
+            <button id="img-btn" class="btn-img" onclick="saveImage()">產生報告圖片</button>
         </div>
-
-        <details>
-            <summary>規劃邏輯說明(按此展開)</summary>
-            <div style="line-height:1.6; padding:10px;">
-                ● 煙罩：採法規標準，長寬各延伸 40cm。<br>
-                ● 風量：面風速 1.0 m/s × 面積 × 3600 (CMH)。<br>
-                ● 壓損：預設 煙罩15 + 靜電20 + 活性碳25 + 管損(2.5/m) + 彎頭(8/個)。<br>
-                ● 管徑：依經濟風速 12 m/s 反算，確保不積油與低噪音。
-            </div>
-        </details>
     </div>
 </div>
 
@@ -135,8 +77,7 @@ function calculate() {
     const z = parseFloat(document.getElementById('zone').value);
     const p = parseFloat(document.getElementById('pipeL').value) || 0;
     const e = parseInt(document.getElementById('ebs').value) || 0;
-
-    if(!L || !W) return alert("請輸入爐具尺寸");
+    if(!L || !W) return alert("請輸入尺寸");
 
     const hL = (L+40)/100, hW = (W+40)/100;
     const cmh = hL * hW * 1.0 * 3600;
@@ -144,37 +85,63 @@ function calculate() {
     const sp = 15 + 20 + z + (p * 2.5) + (e * 8);
     const hp = ((cmh/60)*sp)/(6120*0.65);
     const duct = Math.round(2 * Math.sqrt((cmh/(3600*12))/Math.PI)*100);
-    const airA = (cmh*0.85)/(3600*3);
-    const airS = Math.round(Math.sqrt(airA)*100);
+    const airS = Math.round(Math.sqrt((cmh*0.85)/(3600*3))*100);
 
     document.getElementById('report-area').style.display = 'block';
-    document.getElementById('sum-in').innerHTML = `<b>現場參數：</b> 爐具 ${L}x${W}cm | 區域：${z>0?'住宅區':'商業區'} | 管線 ${p}米 | 彎頭 ${e}個`;
+    document.getElementById('sum-in').innerHTML = `<b>現場參數：</b> 爐具 ${L}x${W}cm | ${z>0?'住宅區':'商業區'} | 管長 ${p}m | 彎頭 ${e}個`;
     document.getElementById('r-hood').innerText = `${Math.round(hL*100)}x${Math.round(hW*100)} cm`;
-    document.getElementById('r-hp').innerText = `${Math.ceil(hp*2)/2 < 1 ? 1 : Math.ceil(hp*2)/2} HP (高靜壓)`;
-    document.getElementById('r-flow').innerText = `${Math.round(cmh)} CMH (${Math.round(cfm)} CFM)`;
+    document.getElementById('r-hp').innerText = `${Math.ceil(hp*2)/2 < 1 ? 1 : Math.ceil(hp*2)/2} HP`;
+    document.getElementById('r-flow').innerText = `${Math.round(cmh)} CMH`;
     document.getElementById('r-duct').innerText = `Ø ${duct}cm (${Math.round(duct/2.54)}吋)`;
     document.getElementById('r-air').innerText = `${airS} x ${airS} cm`;
     document.getElementById('r-esp').innerText = `${Math.ceil(cfm*1.2/2000)*2000}型 以上`;
-    
-    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 }
 
 function copyText() {
-    const t = `【鉅倡餐飲設備 - 排煙規劃建議】\n煙罩：${document.getElementById('r-hood').innerText}\n馬力：${document.getElementById('r-hp').innerText}\n風量：${document.getElementById('r-flow').innerText}\n管徑：${document.getElementById('r-duct').innerText}\n補風：${document.getElementById('r-air').innerText}\n地址：桃園市蘆竹區八股路279號之5\n電話：(03)212-9666`;
-    navigator.clipboard.writeText(t).then(()=>alert("報告文字已複製！"));
+    const t = `【鉅倡餐飲設備規劃】\n煙罩：${document.getElementById('r-hood').innerText}\n馬力：${document.getElementById('r-hp').innerText}\n風量：${document.getElementById('r-flow').innerText}\n管徑：${document.getElementById('r-duct').innerText}\n電話：(03)212-9666`;
+    navigator.clipboard.writeText(t).then(()=>alert("已複製文字！"));
 }
 
 function saveImage() {
+    const btn = document.getElementById('img-btn');
     const target = document.getElementById('capture-zone');
-    html2canvas(target, { scale: 2, useCORS: true }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = '鉅倡排煙規劃報告.png';
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-        alert("圖片已產生並自動下載。");
-    }).catch(err => alert("圖片產生失敗，請確認網路連線。"));
+    
+    // 檢查套件是否載入成功
+    if (typeof html2canvas === 'undefined') {
+        alert("系統組件載入中，請稍候再試...");
+        return;
+    }
+
+    btn.innerText = "正在產生圖片...";
+    btn.disabled = true;
+
+    // 延遲一點點確保 UI 渲染完成
+    setTimeout(() => {
+        html2canvas(target, { 
+            scale: 2, 
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false
+        }).then(canvas => {
+            const dataUrl = canvas.toDataURL("image/png");
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `鉅倡報告_${new Date().getTime()}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            btn.innerText = "產生報告圖片";
+            btn.disabled = false;
+            alert("圖片已下載到您的手機/電腦！");
+        }).catch(err => {
+            console.error(err);
+            alert("產生失敗，請再試一次");
+            btn.innerText = "產生報告圖片";
+            btn.disabled = false;
+        });
+    }, 500);
 }
 </script>
-
 </body>
 </html>
